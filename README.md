@@ -21,12 +21,12 @@
 ### copy the statusline into your desired path (Preferably to ~/.vim)
 
 	```
-	hehe
+	$cp -r statusline_7.vim ~/.vim
 	```
 
 ### Source the file on your .vimrc
 
-	```bash
+	```
 	source ~/Path-To-Your-Directory
 	```
 
