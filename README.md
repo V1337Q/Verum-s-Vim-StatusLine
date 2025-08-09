@@ -9,7 +9,7 @@
 ![Alt text](./assets/git-integration.png)
 
 ## Display Buffer on StatusLine 
-![Alt text](./assets/Buffer-showcase.png)
+![Alt text](./assets/buffer-showcase.png)
 
 
 ## Highly Customizeable
