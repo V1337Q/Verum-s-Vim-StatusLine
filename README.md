@@ -23,6 +23,9 @@
 	```
 	$cp -r statusline_7.vim ~/.vim
 	```
+## Reminder
+
+### If you have any other StatusLine plugin installed (e.g. Vim-Airline) make sure to disabling it on your .vimrc
 
 ### Source the file on your .vimrc
 
