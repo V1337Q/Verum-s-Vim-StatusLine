@@ -13,14 +13,19 @@
 	```
 
 ### cd to the cloned repo
-	```bash
+
+	```
 	$cd Verum-s-Vim-StatusLine
 	```
+
 ### copy the statusline into your desired path (Preferably to ~/.vim)
+
 	```bash
 	$cp -r statusline_7.vim ~/.vim
 	```
+
 ### Source the file on your .vimrc
+
 	```bash
 	source ~/Path-To-Your-Directory
 	```
