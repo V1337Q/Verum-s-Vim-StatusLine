@@ -87,17 +87,17 @@ endfunction
 
 function! Modes(mode)
 	if a:mode == 'n'
-		hi ModeText guifg=#449dab       guibg=#1a1b30       cterm=NONE
+		hi ModeText guifg=#449dab       guibg=#171B24       cterm=NONE
 	elseif a:mode == 'i'
-		hi ModeText guifg=#f7768e       guibg=#1a1b30       cterm=NONE
+		hi ModeText guifg=#f7768e       guibg=#171B24       cterm=NONE
 	elseif a:mode == 'R'
-		hi ModeText guifg=#9ece6a       guibg=#1a1b30       cterm=NONE
+		hi ModeText guifg=#9ece6a       guibg=#171B24       cterm=NONE
 	elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V'
-		hi ModeText guifg=#e0af68       guibg=#1a1b30       cterm=NONE
+		hi ModeText guifg=#e0af68       guibg=#171B24       cterm=NONE
 	elseif a:mode == 'c'
-		hi ModeText guifg=#7aa2f7       guibg=#1a1b30       cterm=NONE
+		hi ModeText guifg=#86aaec       guibg=#171B24       cterm=NONE
 	elseif a:mode == 't'
-		hi ModeText guifg=#ad8ee6       guibg=#1a1b30       cterm=NONE
+		hi ModeText guifg=#c68aee       guibg=#171B24       cterm=NONE
 	endif
 
 	return ''
@@ -153,34 +153,60 @@ function! HandleColumnGap()
 endfunction
 
 "Renders Nerd Font for User
+" function! RenderNf3() 
+" 	let l:col = '.'
+" 	if l:col > 9 
+" 		return '󰉋'
+" 	else 
+" 		return '󰉋'
+" 	endif
+" endfunction
+
 function! RenderNf3() 
 	let l:col = '.'
 	if l:col > 9 
-		return '󰉋'
+		return ' '
 	else 
-		return '󰉋'
+		return ' '
 	endif
 endfunction
 
 
-
 "Render Nerd Font for path
+" function! RenderNf()
+" 	let l:col = '.'
+" 	if l:col > 9
+" 		return ' '
+" 	else
+" 		return ' '
+" 	endif
+" endfunction
+
 function! RenderNf()
 	let l:col = '.'
 	if l:col > 9
-		return ' '
+		return ' '
 	else
-		return ' '
+		return ' '
 	endif
 endfunction
 
 "Render Nerd Font for Git
+" function! RenderNf2()
+" 	let l:col = '.'
+" 	if l:col > 9
+" 		return ' '
+" 	else
+" 		return ' '
+" 	endif
+" endfunction
+
 function! RenderNf2()
 	let l:col = '.'
 	if l:col > 9
-		return ' '
+		return ' '
 	else
-		return ' '
+		return ' '
 	endif
 endfunction
 
@@ -192,7 +218,47 @@ function! GetBranchName()
 	return trim(system('git -C ' . shellescape(l:dir) . ' branch --show-current 2>/dev/null'))
 endfunction
 
-function! RenderCpp()
+function! GetGitStatus()
+	let l:dir = expand('%:h')
+	if empty(finddir('.git', l:dir . ';'))
+		return ''
+	endif
+
+  let l:status = systemlist('git -C ' . shellescape(l:dir) . ' status --porcelain=2 --branch')
+
+  let l:ahead       = ''
+  let l:behind      = ''
+  let l:staged      = ''
+  let l:modified   = ''
+  let l:untracked   = ''
+
+
+  "Ahead/behind
+  if !empty(l:status)
+    if l:status[0] =~ 'ahead (\d\+)'
+      let l:ahead = '^'
+    endif
+    if l:status[0] =~ 'behind (\d\+)'
+      let l:behind = '-^' 
+    endif
+  endif
+
+  "File changes
+  for l:line in l:status
+    if l:line =~ '^1 ' && l:line[2] !=# '.' "staged
+      let l:staged = '  '
+    elseif l:line =~ '^1 ' && l:line[3] !=# '.' "unstaged
+      let l:modified = ' '
+    elseif l:line =~ '^?'
+      let l:untracked = ' ?'
+    endif
+  endfor
+
+  return l:ahead . l:staged . l:modified . l:untracked
+
+endfunction
+  
+  function! RenderCpp()
 	let l:col = '.'
 	if l:col > 9
 		return ''
@@ -248,8 +314,14 @@ function! GetFiletype()
         	return ' '
 	elseif &filetype ==# 'zsh' && col('.')
         	return ' '
+	" elseif &filetype ==# 'markdown' && col('.')
+          " return '⚙️'
 	elseif &filetype ==# 'markdown' && col('.')
-          return '⚙️'
+          return '⚙️
+	elseif &filetype ==# 'text' && col('.')
+          return '󰈚 '
+  elseif &filetype ==# 'startify' &&col('.')
+          return '🔍'
     endif
 endfunction
 
@@ -314,31 +386,31 @@ endfunction
 "   return empty(l:status) ? '' : '✗'
 " endfunction
 
-hi StatusLine       guifg=#1a1b26    guibg=NONE    cterm=NONE
+hi StatusLine       guifg=#171B20    guibg=NONE    cterm=NONE
 hi StatusLineNC     guifg=NONE    guibg=NONE    cterm=NONE
 
-hi Separator        guifg=#1a1b30       guibg=#1a1b26       cterm=NONE
-hi Separator2       guifg=#ff9e64       guibg=#1a1b30       cterm=NONE
-hi PathText         guifg=#ad8ee6       guibg=#1a1b30       cterm=NONE
-hi ungu             guifg=#ad8ee6       guibg=#1a1b30       cterm=NONE
-hi gray             guifg=#ad8ee6       guibg=#1a1b30       cterm=NONE
-hi FileText         guifg=#acb0d0       guibg=#1a1b30       cterm=NONE
-hi FiletypeText     guifg=#ff9e64       guibg=#1a1b30       cterm=NONE
+hi Separator        guifg=#171B24       guibg=#171B20       cterm=NONE
+hi Separator2       guifg=#e9a180       guibg=#171B24       cterm=NONE
+hi PathText         guifg=#c68aee       guibg=#171B24       cterm=NONE
+hi ungu             guifg=#c68aee       guibg=#171B24       cterm=NONE
+hi gray             guifg=#c68aee       guibg=#171B24       cterm=NONE
+hi FileText         guifg=#acb0d0       guibg=#171B24       cterm=NONE
+hi FiletypeText     guifg=#e9a180       guibg=#171B24       cterm=NONE
 
-hi LineText         guifg=#ff7a92       guibg=#1a1b30       cterm=NONE
-hi red              guifg=#ff7a92       guibg=#1a1b26       cterm=NONE
-hi ColumnText       guifg=#7da6ff       guibg=#1a1b30       cterm=NONE
+hi LineText         guifg=#e26c7c       guibg=#171B24       cterm=NONE
+hi red              guifg=#e26c7c       guibg=#171B20       cterm=NONE
+hi ColumnText       guifg=#7da6ff       guibg=#171B24       cterm=NONE
 
-hi PercentageText   guifg=#7aa2f7       guibg=#1a1b30       cterm=NONE
-hi TotalLineText    guifg=#ad8ee6       guibg=#1a1b30       cterm=NONE
+hi PercentageText   guifg=#86aaec       guibg=#171B24       cterm=NONE
+hi TotalLineText    guifg=#c68aee       guibg=#171B24       cterm=NONE
 
-hi BranchNameText   guifg=#b9f27c       guibg=#1a1b30       cterm=NONE
-hi hijau            guifg=#b9f27c       guibg=#1a1b30       cterm=NONE
-" hi green            guifg=#b9f27c       guibg=#1a1b30       cterm=NONE
-hi invis            guifg=#1a1b26       guibg=#1a1b26       cterm=NONE
-hi abu              guifg=#4e517e       guibg=#1a1b26       cterm=NONE
-hi hijau2           guifg=#b9f27c       guibg=#1a1b26       cterm=NONE
-hi BranchIDText     guifg=#ff9e64       guibg=#1a1b30       cterm=NONE
+hi BranchNameText   guifg=#78DBA9       guibg=#171B24       cterm=NONE
+hi hijau            guifg=#78DBA9       guibg=#171B24       cterm=NONE
+" hi green            guifg=#78DBA9       guibg=#171B24       cterm=NONE
+hi invis            guifg=#171B20       guibg=#171B20       cterm=NONE
+hi abu              guifg=#2b3038       guibg=#171B20       cterm=NONE
+hi hijau2           guifg=#78DBA9       guibg=#171B20       cterm=NONE
+hi BranchIDText     guifg=#e9a180       guibg=#171B24       cterm=NONE
 
 
 set statusline  =%{Modes(mode())}
@@ -363,14 +435,20 @@ set statusline +=%#Separator2#%{RenderNf()}
 set statusline +=%#Separator2#%{Buffer()}
 set statusline +=%#Separator# 
 
-set statusline +=%#invis# 
-set statusline +=%#abu#%{GetLSPName()}
+" set statusline +=%#invis# 
+" set statusline +=%#abu#%{GetGitStatus()}
+
+" set statusline +=%#invis# 
+" set statusline +=%#abu#%{GetLSPName()}
 set statusline +=%=
 
+set statusline +=%#abu#%{GetLSPName()}
+set statusline +=%#invis# 
+
 set statusline +=%#red#%{coc#status()}
+set statusline +=%#invis# 
 " set statusline +=%{coc#status()}
 
-set statusline +=%#invis# 
 
 " set statusline +=%#Separator# 
 " set statusline+=%{GitDirty()}
@@ -392,16 +470,18 @@ set statusline +=%#Separator#\
 " set statusline +=%#Separator#\ 
 
 set statusline +=%#Separator# 
-set statusline +=%#LineText#%2l\ 
+set statusline +=%#ColumnText#%2l\ 
 " set statusline +=%#Separator2#%{HandleColumnGap()}
-set statusline +=%#Separator2#/ 
+" set statusline +=%#Separator2#/ 
+" set statusline +=%#ColumnText#/ 
+set statusline +=%#ColumnText#- 
 set statusline +=%#ColumnText#%2c\ 
 set statusline +=%#Separator#\ 
 " set statusline +=%#Separator#
-set statusline +=%#Separator#
-set statusline +=%#PercentageText#\%P\ 
-" set statusline +=%#Separator2#\ 
-set statusline +=%#Separator2#/\ 
-set statusline +=%#TotalLineText#%L
-set statusline +=%#Separator#
+" set statusline +=%#Separator#
+" set statusline +=%#PercentageText#\%P\ 
+" " set statusline +=%#Separator2#\ 
+" set statusline +=%#Separator2#/\ 
+" set statusline +=%#TotalLineText#%L
+" set statusline +=%#Separator#
 " set statusline +=%{coc#status()}%{get(b:,'coc_current_function','')}
