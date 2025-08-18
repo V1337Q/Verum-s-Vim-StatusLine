@@ -8,27 +8,27 @@
 # Installation
 
 ### clone the repo
-	```bash
-	$git clone https://github.com/V1337Q/Verum-s-Vim-StatusLine
-	```
+```sh
+$git clone https://github.com/V1337Q/Verum-s-Vim-StatusLine
+```
 
 ### cd to the cloned repo
 
-	```
-	$cd Verum-s-Vim-StatusLine
-	```
+```bash
+$cd Verum-s-Vim-StatusLine
+```
 
 ### copy the statusline into your desired path (Preferably to ~/.vim)
 
-	```
-	$cp -r statusline_7.vim ~/.vim
-	```
+```bash
+$cp -r statusline_7.vim ~/.vim
+```
 
 ### Source the file on your .vimrc
 
-	```
-	source ~/Path-To-Your-Directory
-	```
+```vim
+source ~/Path-To-Your-Directory
+```
 
 ## Reminder
 
